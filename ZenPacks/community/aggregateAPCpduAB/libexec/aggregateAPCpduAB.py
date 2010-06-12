@@ -24,7 +24,7 @@ def collect_data(options, devices, oid):
     '''Fetch data at given OID from specified devices'''
     results = {}
     for device in devices:
-        cmd = "snmpget -v1 -c %s %s %s" %(options.community,device, oid)
+        cmd = "snmpget -v1 -c %s %s %s" %(options.community_string,device, oid)
         # Get the numeric value from snmp
         p = subprocess.Popen(cmd,
                     shell=True,
