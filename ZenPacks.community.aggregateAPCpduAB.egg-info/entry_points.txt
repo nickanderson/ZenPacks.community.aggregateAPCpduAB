@@ -1,0 +1,3 @@
+[zenoss.zenpacks]
+ZenPacks.community.aggregateAPCpduAB = ZenPacks.community.aggregateAPCpduAB
+
