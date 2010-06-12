@@ -11,7 +11,7 @@ from optparse import *
 
 def display(aggregate, results):
     '''Output load results in zenoss parsable format'''
-    print "Aggregate=%s" %aggregate,
+    print "PDU: OK | Aggregate=%s" %aggregate,
     count = 0
     for device in results:
         if count == 0:
@@ -24,7 +24,7 @@ def collect_data(options, devices, oid):
     '''Fetch data at given OID from specified devices'''
     results = {}
     for device in devices:
-        cmd = "snmpget -v1 -c public %s %s" %(device, oid)
+        cmd = "snmpget -v1 -c %s %s %s" %(options.community,device, oid)
         # Get the numeric value from snmp
         p = subprocess.Popen(cmd,
                     shell=True,
