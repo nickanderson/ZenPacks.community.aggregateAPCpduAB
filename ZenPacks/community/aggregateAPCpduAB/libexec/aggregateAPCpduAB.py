@@ -11,27 +11,14 @@ from optparse import *
 
 def display(aggregate, results):
     '''Output load results in zenoss parsable format'''
-    status = "OK"
-    for device in results:
-        if results[device] < 0:
-            status = "ERROR on %s" %device
-    print "PDU: %s |" %status,
-    
-    if status == "OK":
-        print "Aggregate=%s" %aggregate,
-    
+    print "PDU: OK | Aggregate=%s" %aggregate,
     count = 0
     for device in results:
-        if results[device] >= 0:
-            if count == 0:
-                print "A=%s" %(results[device]),
-            else:
-                print "B=%s" %(results[device]),
+        if count == 0:
+            print "A=%s" %(results[device]),
+        else:
+            print "B=%s" %(results[device]),
         count += 1
-    if status == "OK":
-        return 0
-    else:
-        return 2
 
 def collect_data(options, devices, oid):
     '''Fetch data at given OID from specified devices'''
@@ -41,17 +28,16 @@ def collect_data(options, devices, oid):
         # Get the numeric value from snmp
         p = subprocess.Popen(cmd,
                     shell=True,
-                    stderr=subprocess.PIPE,
                     stdout=subprocess.PIPE)
         value = p.communicate()[0]
         # Check for error running snmpget
         if not p.returncode == 0:
             # Return critical if unable to communicate
-            #print "PDU: Failed to communicate with %s" %device
-            results[device] = -1
+            print "PDU: Failed to communicate with %s" %device
+            sys.exit(2)
         else:
             value = value.split()[-1]
-            results[device] = value
+        results[device] = value
     return results
     
 def convert_values(results):
@@ -90,8 +76,7 @@ if __name__ == "__main__":
     # Tabulate aggrigate value for devices
     aggregate = 0
     for device in results:
-       if results[device] >= 0:
-           aggregate += results[device]
+       aggregate += results[device]
 
     # Display output
-    sys.exit(display(aggregate,results))
+    display(aggregate,results)
