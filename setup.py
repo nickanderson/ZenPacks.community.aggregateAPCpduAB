@@ -3,7 +3,7 @@
 # or saved.  Do not modify them directly here.
 # NB: PACKAGES is deprecated
 NAME = "ZenPacks.community.aggregateAPCpduAB"
-VERSION = "1.01"
+VERSION = "1.02"
 AUTHOR = "Nick Anderson <nick@cmdln.org>"
 LICENSE = ""
 NAMESPACE_PACKAGES = ['ZenPacks', 'ZenPacks.community']
