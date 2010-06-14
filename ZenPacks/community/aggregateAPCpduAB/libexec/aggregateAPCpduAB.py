@@ -33,6 +33,7 @@ def collect_data(options, devices, oid):
         # Check for error running snmpget
         if not p.returncode == 0:
             # Return critical if unable to communicate
+            print "PDU: Failed to communicate with %s" %device
             sys.exit(2)
         else:
             value = value.split()[-1]
